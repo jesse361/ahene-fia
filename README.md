@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ahene Fia Events & Conference Hub
 
-## Getting Started
+A Next.js website for a premium events and conference house. The programme, speakers, ticket prices, and partner marks are **demonstration content** until a real event is confirmed.
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm test
+npm run lint
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Node.js 22 or newer is required. This project was built with Node.js 24 and Next.js 16.
 
-## Learn More
+## Environment
 
-To learn more about Next.js, take a look at the following resources:
+Copy `.env.example` to `.env.local`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | No | Canonical URL used in metadata, the sitemap, and structured data. Defaults to `http://localhost:3000`. |
+| `RESEND_API_KEY` | No | Server-only key for the optional email adapter. |
+| `CONTACT_TO_EMAIL` | No | Inbox that receives contact form messages. |
+| `CONTACT_FROM_EMAIL` | No | Verified sender address for that provider. |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+If any of the three email variables is missing, the contact form still validates and then tells the visitor that the message was **not emailed**. Registration never stores a booking. It returns a demonstration reference and states that no payment was taken and no seat was reserved.
 
-## Deploy on Vercel
+To persist registrations, replace `src/lib/registration/submit.ts` with a server-side database write and return `stored: true` only after that write succeeds. To take payment, verify the ticket and price on the server with a payment provider. Do not collect card numbers in this app. The in-memory rate limit in `src/lib/utils/rate-limit.ts` is per server process and is not enough on its own in production.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Replace the demonstration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Event name, dates, timezone, and venue: `src/config/event.ts`
+- Speakers: `src/data/speakers.ts`
+- Schedule: `src/data/schedule.ts`
+- Ticket prices and proposed benefits: `src/data/tickets.ts`
+- Sponsors: `src/data/sponsors.ts` (leave empty or add only confirmed partners, with real logo files)
+- Public contact details and social links: `src/config/site.ts`
+
+Photography in `public/images` is illustrative stock. Speaker portraits are not photographs of the named sample speakers.
+
+## Routes
+
+`/`, `/speakers`, `/speakers/[slug]`, `/schedule`, `/tickets`, `/contact`, `/about`, `/privacy`, `/terms`, `/api/register`, `/api/contact`, `/api/calendar`, `/sitemap.xml`, `/robots.txt`.

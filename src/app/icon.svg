@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Ahene Fia">
+  <rect width="64" height="64" rx="14" fill="#10151B"/>
+  <path d="M32 8 L54 32 L32 56 L10 32 Z" fill="none" stroke="#D6AD60" stroke-width="2"/>
+  <path d="M22 41 V30.5 Q32 18 42 30.5 V41" fill="none" stroke="#D6AD60" stroke-width="2"/>
+  <path d="M24 41 H40" stroke="#D6AD60" stroke-width="2"/>
+</svg>
